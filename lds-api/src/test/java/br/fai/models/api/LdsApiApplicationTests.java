@@ -1,12 +1,13 @@
-package br.fai.lds.client;
+package br.fai.models.api;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-public class LdsClientApplicationTests {
+public class LdsApiApplicationTests {
 
     @Test
     void contextLoad() {
     }
+
 }

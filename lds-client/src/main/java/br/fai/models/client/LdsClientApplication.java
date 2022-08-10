@@ -1,4 +1,4 @@
-package br.fai.lds.client;
+package br.fai.models.client;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

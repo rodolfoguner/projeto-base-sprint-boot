@@ -1,4 +1,4 @@
-package br.fai.lds.api.controller;
+package br.fai.models.api.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
