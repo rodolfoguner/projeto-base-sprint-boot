@@ -66,13 +66,14 @@
                          data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
                             <h6 class="collapse-header">Login Screens:</h6>
-                            <a class="collapse-item" href="login.html">Login</a>
-                            <a class="collapse-item" href="register.html">Register</a>
-                            <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
+                            <a class="collapse-item" th:href="@{/account/sign-in}">Login</a>
+                            <a class="collapse-item" th:href="@{/account/sign-up}">Register</a>
+                            <a class="collapse-item" th:href="@{/account/password-recovery}">Forgot Password</a>
                             <div class="collapse-divider"></div>
                             <h6 class="collapse-header">Other Pages:</h6>
-                            <a class="collapse-item" href="404.html">404 Page</a>
-                            <a class="collapse-item active" href="base.html">Home</a>
+                            <a class="collapse-item" th:href="@{/common/not-found}">404 Page</a>
+                            <a class="collapse-item" th:href="@{/common/access-denied}">Access Denied</a>
+                            <a class="collapse-item active" th:href="@{/}">Home</a>
                         </div>
                     </div>
                 </li>
