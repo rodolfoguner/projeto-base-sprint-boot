@@ -1,13 +1,18 @@
 package br.fai.models.client.service.impl;
 
+import br.fai.models.client.service.RestService;
 import br.fai.models.client.service.UserService;
 import br.fai.models.entities.UserModel;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService<UserModel> {
+
+    @Autowired
+    private RestService restService;
 
     @Override
     public int create(UserModel entity) {
