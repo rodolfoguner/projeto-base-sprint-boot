@@ -9,6 +9,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
@@ -18,12 +19,6 @@ public class UserServiceImpl implements UserService<UserModel> {
 
     @Autowired
     private RestService restService;
-
-    private static final String BASE_ENDPOINT = "http://localhost:8081/api/";
-
-    private String buildEndPoint(String resource) {
-        return BASE_ENDPOINT + resource;
-    }
 
     @Override
     public int create(UserModel entity) {
@@ -53,21 +48,26 @@ public class UserServiceImpl implements UserService<UserModel> {
     @Override
     public UserModel validateUsernameAndPassword(String username, String password) {
 
-        RestTemplate restTemplate = new RestTemplate();
+        try {
+            RestTemplate restTemplate = new RestTemplate();
 
-        HttpEntity<String> httpEntity = new HttpEntity<>("");
+            HttpEntity<String> httpEntity = new HttpEntity<>("");
 
-        String resource = "account/login?username=" + username +
-                "&password=" + password;
-        ResponseEntity<UserModel> responseEntity = restTemplate.exchange(buildEndPoint(resource),
-                HttpMethod.POST, httpEntity, UserModel.class);
+            String resource = "account/login?username=" + username +
+                    "&password=" + password;
+            ResponseEntity<UserModel> responseEntity = restTemplate.exchange(buildEndPoint(resource),
+                    HttpMethod.POST, httpEntity, UserModel.class);
 
-        if (responseEntity.getStatusCode() != HttpStatus.OK) {
-            return null;
+            if (responseEntity.getStatusCode() != HttpStatus.OK) {
+                return null;
+            }
+
+            UserModel user = responseEntity.getBody();
+
+            return user;
+        } catch (RestClientException e) {
+            e.printStackTrace();
+            return  null;
         }
-
-        UserModel user = responseEntity.getBody();
-
-        return user;
     }
 }

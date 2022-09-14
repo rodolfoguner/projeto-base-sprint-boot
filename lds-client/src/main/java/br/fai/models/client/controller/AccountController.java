@@ -43,8 +43,12 @@ public class AccountController {
     public String login(@RequestParam("username") final String username,
                         @RequestParam("password") final String password) {
 
-        userService.validateUsernameAndPassword(username, password);
+        UserModel userModel = userService.validateUsernameAndPassword(username, password);
 
-        return "redirect:/account/sign-up";
+        if (userModel == null) {
+            return "redirect:/account/sign-un";
+        }
+
+        return "redirect:/";
     }
 }

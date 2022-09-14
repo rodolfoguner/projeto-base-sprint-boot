@@ -4,17 +4,20 @@ import java.sql.*;
 
 public class ConnectionFactory {
 
+    private ConnectionFactory() {
+    }
+
     private static Connection connection = null;
 
-    private static final String URL = "jdbc:postgresql:://localhost:3000/db_fai_lds";
+    private static final String URL = "jdbc:postgresql://localhost:3000/db_fai_lds";
     private static final String USER = "postgres";
     private static final String PASSWORD = "postgres";
 
     public static Connection getConnection() {
         try {
-            if (connection != null) {
-                return connection;
-            }
+//            if (connection != null) {
+//                return connection;
+//            }
             connection = DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -25,6 +28,11 @@ public class ConnectionFactory {
     public static void close(PreparedStatement preparedStatement, Connection connection, ResultSet resultSet) {
         closePreparedStatement(preparedStatement);
         closeResultSet(resultSet);
+        closeConnection(connection);
+    }
+
+    public static void close(PreparedStatement preparedStatement, Connection connection) {
+        closePreparedStatement(preparedStatement);
         closeConnection(connection);
     }
 

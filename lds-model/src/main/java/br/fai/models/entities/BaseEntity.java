@@ -7,7 +7,6 @@ public class BaseEntity {
     private Timestamp createdAt;
     private Timestamp lastModified;
     private String createdBy;
-    private String lastModifiedBy;
 
     public Timestamp getCreatedAt() {
         return createdAt;
@@ -32,12 +31,5 @@ public class BaseEntity {
     public void setCreatedBy(String createdBy) {
         this.createdBy = createdBy;
     }
-
-    public String getLastModifiedBy() {
-        return lastModifiedBy;
-    }
-
-    public void setLastModifiedBy(String lastModifiedBy) {
-        this.lastModifiedBy = lastModifiedBy;
-    }
+    
 }

@@ -66,18 +66,29 @@ CREATE TABLE usuario_jogo
     PRIMARY KEY (usuario_id_fk, jogo_id_fk)
 );
 
+-- ALTER TABLE usuario_jogo
+--     ADD CONSTRAINT usuario_jogo_usuario_fk
+--         FOREIGN KEY (usuario_id_fk)
+--             REFERENCES usuario (id)
+--             ON DELETE SET NULL;
+
+-- ALTER TABLE usuario_jogo
+--     ADD CONSTRAINT usuario_jogo_jogo_fk
+--         FOREIGN KEY (jogo_id_fk)
+--             REFERENCES jogo (id)
+--             ON DELETE SET NULL;
+
 ALTER TABLE usuario_jogo
     ADD CONSTRAINT usuario_jogo_usuario_fk
         FOREIGN KEY (usuario_id_fk)
             REFERENCES usuario (id)
-            ON DELETE SET NULL;
+            ON DELETE CASCADE;
 
 ALTER TABLE usuario_jogo
     ADD CONSTRAINT usuario_jogo_jogo_fk
         FOREIGN KEY (jogo_id_fk)
             REFERENCES jogo (id)
-            ON DELETE SET NULL;
-
+            ON DELETE CASCADE;
 
 CREATE TABLE comentario
 (
@@ -92,19 +103,29 @@ CREATE TABLE comentario
     PRIMARY KEY (id)
 );
 
+-- ALTER TABLE comentario
+--     ADD CONSTRAINT comentario_jogo_fk
+--         FOREIGN KEY (jogo_id_fk)
+--             REFERENCES jogo (id)
+--             ON DELETE SET NULL;
+--
+-- ALTER TABLE comentario
+--     ADD CONSTRAINT comentario_usuario_fk
+--         FOREIGN KEY (usuario_id_fk)
+--             REFERENCES usuario (id)
+--             ON DELETE SET NULL;
+
 ALTER TABLE comentario
     ADD CONSTRAINT comentario_jogo_fk
         FOREIGN KEY (jogo_id_fk)
             REFERENCES jogo (id)
-            ON DELETE SET NULL;
+            ON DELETE CASCADE ;
 
 ALTER TABLE comentario
     ADD CONSTRAINT comentario_usuario_fk
         FOREIGN KEY (usuario_id_fk)
             REFERENCES usuario (id)
-            ON DELETE SET NULL;
-
-
+            ON DELETE CASCADE ;
 
 
 
