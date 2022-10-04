@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class AccountController {
 
     @Autowired
-    UserService userService;
+    UserService<UserModel> userService;
 
     @GetMapping("/sign-up")
     public String getSignUp() {
@@ -36,7 +36,7 @@ public class AccountController {
 
         userService.create(user);
 
-        return "redirect:/account/sign-in";
+        return "redirect:/user";
     }
 
     @PostMapping("/login")
@@ -46,7 +46,7 @@ public class AccountController {
         UserModel userModel = userService.validateUsernameAndPassword(username, password);
 
         if (userModel == null) {
-            return "redirect:/account/sign-un";
+            return "redirect:/account/sign-up";
         }
 
         return "redirect:/";

@@ -3,7 +3,6 @@ package br.fai.models.api.service.impl;
 import br.fai.lds.db.dao.UserDao;
 import br.fai.models.api.service.UserRestService;
 import br.fai.models.entities.UserModel;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +31,7 @@ public class UserRestServiceImpl implements UserRestService<UserModel> {
 
     @Override
     public int create(UserModel entity) {
-        
+
         return 0;
     }
 
@@ -51,7 +50,7 @@ public class UserRestServiceImpl implements UserRestService<UserModel> {
 
     @Override
     public boolean deleteById(int id) {
-        return false;
+        return userDao.deleteById(id);
     }
 
     @Override

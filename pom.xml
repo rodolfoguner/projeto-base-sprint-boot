@@ -31,6 +31,9 @@
 
     <dependencyManagement>
         <dependencies>
+
+            <!--Dependencias do projeto-->
+
             <dependency>
                 <groupId>br.fai.lds</groupId>
                 <artifactId>lds-model</artifactId>
@@ -42,6 +45,8 @@
                 <artifactId>lds-database</artifactId>
                 <version>0.0.1-SNAPSHOT</version>
             </dependency>
+
+            <!--Dependencias de terceiros -->
 
             <dependency>
                 <groupId>org.springframework</groupId>
@@ -59,6 +64,12 @@
                 <groupId>org.springdoc</groupId>
                 <artifactId>springdoc-openapi-ui</artifactId>
                 <version>1.6.9</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.google.code.gson</groupId>
+                <artifactId>gson</artifactId>
+                <version>2.9.1</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

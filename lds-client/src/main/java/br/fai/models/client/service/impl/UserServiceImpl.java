@@ -17,37 +17,38 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService<UserModel> {
 
+    final String resource = "user/";
+
     @Autowired
-    private RestService restService;
+    private RestService<UserModel> restService;
 
     @Override
     public int create(UserModel entity) {
-        return 0;
+        return restService.post(resource, entity);
     }
 
     @Override
     public List<UserModel> find() {
-        return null;
+        return restService.get(resource);
     }
 
     @Override
     public UserModel findById(int id) {
-        return null;
+        return restService.getById(resource + "/" + id, UserModel.class);
     }
 
     @Override
-    public boolean update(UserModel entity) {
-        return false;
+    public boolean update(int id, UserModel entity) {
+        return restService.put(resource + "/" + id, entity);
     }
 
     @Override
     public boolean deleteById(int id) {
-        return false;
+        return restService.deleteById(resource + "/" + id);
     }
 
     @Override
     public UserModel validateUsernameAndPassword(String username, String password) {
-
         try {
             RestTemplate restTemplate = new RestTemplate();
 
@@ -55,8 +56,11 @@ public class UserServiceImpl implements UserService<UserModel> {
 
             String resource = "account/login?username=" + username +
                     "&password=" + password;
-            ResponseEntity<UserModel> responseEntity = restTemplate.exchange(buildEndPoint(resource),
-                    HttpMethod.POST, httpEntity, UserModel.class);
+            ResponseEntity<UserModel> responseEntity = restTemplate.exchange(
+                    "http://localhost:8081/api/account/login",
+                    HttpMethod.POST,
+                    httpEntity,
+                    UserModel.class);
 
             if (responseEntity.getStatusCode() != HttpStatus.OK) {
                 return null;
@@ -67,7 +71,7 @@ public class UserServiceImpl implements UserService<UserModel> {
             return user;
         } catch (RestClientException e) {
             e.printStackTrace();
-            return  null;
+            return null;
         }
     }
 }

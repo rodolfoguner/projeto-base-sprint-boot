@@ -47,7 +47,7 @@ public class UserRestController {
         if (userId == -1) {
             return ResponseEntity.badRequest().build();
         }
-        
+
         return ResponseEntity.ok(userId);
     }
 

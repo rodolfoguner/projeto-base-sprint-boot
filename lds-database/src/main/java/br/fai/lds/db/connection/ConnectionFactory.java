@@ -9,7 +9,7 @@ public class ConnectionFactory {
 
     private static Connection connection = null;
 
-    private static final String URL = "jdbc:postgresql://localhost:3000/db_fai_lds";
+    private static final String URL = "jdbc:postgresql://localhost:3002/db_fai_lds";
     private static final String USER = "postgres";
     private static final String PASSWORD = "postgres";
 

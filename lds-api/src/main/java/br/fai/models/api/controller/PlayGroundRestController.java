@@ -15,4 +15,9 @@ public class PlayGroundRestController {
     public ResponseEntity<String> getPlayGroundData() {
         return ResponseEntity.ok("Boa noite. =D");
     }
+
+    @GetMapping("/openapi-test")
+    public ResponseEntity<String> getOpenApiTeste() {
+        return ResponseEntity.ok("Teste com o OpenApi");
+    }
 }

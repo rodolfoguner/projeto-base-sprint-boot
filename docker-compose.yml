@@ -1,0 +1,14 @@
+version: "3.7"
+
+services:
+  db:
+    image: postgres:14
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: estudos
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+      - ./db-scripts/fai-lds-db.sql:/docker-entrypoint-initdb.d/clinica_ids_dump_2022.sql
+    ports:
+      - '3002:5432'
