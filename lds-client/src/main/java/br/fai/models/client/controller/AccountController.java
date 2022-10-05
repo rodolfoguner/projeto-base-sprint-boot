@@ -23,7 +23,7 @@ public class AccountController {
 
     @GetMapping("/sign-in")
     public String getSignIn() {
-        return "account/sign-in";
+        return "account/sign-in-page";
     }
 
     @GetMapping("/password-recovery")
