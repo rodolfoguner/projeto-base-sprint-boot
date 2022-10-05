@@ -7,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/account")
@@ -39,16 +38,16 @@ public class AccountController {
         return "redirect:/user";
     }
 
-    @PostMapping("/login")
-    public String login(@RequestParam("username") final String username,
-                        @RequestParam("password") final String password) {
-
-        UserModel userModel = userService.validateUsernameAndPassword(username, password);
-
-        if (userModel == null) {
-            return "redirect:/account/sign-up";
-        }
-
-        return "redirect:/";
-    }
+//    @PostMapping("/login")
+//    public String login(@RequestParam("username") final String username,
+//                        @RequestParam("password") final String password) {
+//
+//        UserModel userModel = userService.validateUsernameAndPassword(username, password);
+//
+//        if (userModel == null) {
+//            return "redirect:/account/sign-up";
+//        }
+//
+//        return "redirect:/";
+//    }
 }

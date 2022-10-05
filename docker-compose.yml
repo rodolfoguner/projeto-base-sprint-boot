@@ -6,9 +6,9 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: estudos
+      POSTGRES_DB: db_fai_lds
     volumes:
       - ./pgdata:/var/lib/postgresql/data
-      - ./db-scripts/fai-lds-db.sql:/docker-entrypoint-initdb.d/clinica_ids_dump_2022.sql
+      - ./db-scripts/fai-lds-db.sql:/docker-entrypoint-initdb.d/fai-lds-db.sql
     ports:
       - '3002:5432'

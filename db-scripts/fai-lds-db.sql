@@ -1,11 +1,11 @@
-CREATE DATABASE db_fai_lds WITH OWNER = postgres
-ENCODING = 'UTF8' CONNECTION LIMIT = -1;
+-- CREATE DATABASE db_fai_lds WITH OWNER = postgres
+-- ENCODING = 'UTF8' CONNECTION LIMIT = -1;
 
--- DROP TABLE comentario;
--- DROP TABLE usuario_jogo;
--- DROP TABLE imagem_jogo;
--- DROP TABLE jogo;
--- DROP TABLE usuario;
+-- -- DROP TABLE comentario;
+-- -- DROP TABLE usuario_jogo;
+-- -- DROP TABLE imagem_jogo;
+-- -- DROP TABLE jogo;
+-- -- DROP TABLE usuario;
 
 CREATE TABLE usuario
 (
