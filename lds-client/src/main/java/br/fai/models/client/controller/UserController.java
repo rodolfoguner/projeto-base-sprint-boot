@@ -20,8 +20,9 @@ public class UserController {
     @Autowired
     private UserService<UserModel> userService;
 
-    @GetMapping("")
+    @GetMapping("/")
     public String getUsers(final Model model) {
+        userService = null;
         List<UserModel> users = userService.find();
 
         if (users == null || users.isEmpty()) {
