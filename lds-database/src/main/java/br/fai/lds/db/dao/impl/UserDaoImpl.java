@@ -34,6 +34,7 @@ public class UserDaoImpl implements UserDao<UserModel> {
                 user.setUsername(resultSet.getString("nome_usuario"));
                 user.setFullName(resultSet.getString("nome_completo"));
                 user.setEmail(resultSet.getString("email"));
+                user.setType(UserType.valueOf(resultSet.getString("tipo")));
                 user.setActive(resultSet.getBoolean("esta_ativo"));
                 user.setLastModified(resultSet.getTimestamp("ultima_modificacao"));
                 users.add(user);
@@ -76,6 +77,7 @@ public class UserDaoImpl implements UserDao<UserModel> {
             user.setUsername(resultSet.getString("nome_usuario"));
             user.setFullName(resultSet.getString("nome_completo"));
             user.setEmail(resultSet.getString("email"));
+            user.setType(UserType.valueOf(resultSet.getString("tipo")));
             user.setActive(resultSet.getBoolean("esta_ativo"));
             user.setLastModified(resultSet.getTimestamp("ultima_modificacao"));
 
@@ -112,7 +114,7 @@ public class UserDaoImpl implements UserDao<UserModel> {
             preparedStatement.setString(2, entity.getPassword());
             preparedStatement.setString(3, entity.getUsername());
             preparedStatement.setString(4, entity.getEmail());
-            preparedStatement.setString(5, UserType.CLIENT.toString());
+            preparedStatement.setString(5, UserType.USUARIO.toString());
             preparedStatement.setBoolean(6, entity.getActive());
             preparedStatement.setTimestamp(7, new Timestamp(System.currentTimeMillis()));
             preparedStatement.setString(8, entity.getUsername());
@@ -254,6 +256,7 @@ public class UserDaoImpl implements UserDao<UserModel> {
             user.setUsername(resultSet.getString("nome_usuario"));
             user.setFullName(resultSet.getString("nome_completo"));
             user.setEmail(resultSet.getString("email"));
+            user.setType(UserType.valueOf(resultSet.getString("tipo")));
             user.setActive(resultSet.getBoolean("esta_ativo"));
             user.setLastModified(resultSet.getTimestamp("ultima_modificacao"));
 

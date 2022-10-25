@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -29,6 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/js/**").permitAll()
                 .antMatchers("/scss/**").permitAll()
                 .antMatchers("/vendor/**").permitAll()
+                .antMatchers("/account/sign-up").permitAll()
                 .antMatchers("/").permitAll()
                 .anyRequest().authenticated()
                 .and()
@@ -36,6 +38,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/account/sign-in")
                 .loginProcessingUrl("/account/login").permitAll()
                 .defaultSuccessUrl("/")
+                .and()
+                .logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/")
                 .and()
                 .exceptionHandling()
                 .accessDeniedPage("/common/access-denied");

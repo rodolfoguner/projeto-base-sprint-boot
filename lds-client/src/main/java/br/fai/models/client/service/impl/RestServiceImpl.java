@@ -106,7 +106,7 @@ public class RestServiceImpl<T> implements RestService<T> {
 
             final String response = responseEntity.getBody();
 
-            return Integer.parseInt(resource);
+            return Integer.parseInt(response);
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -57,7 +57,7 @@ public class UserServiceImpl implements UserService<UserModel> {
             String resource = "account/login?username=" + username +
                     "&password=" + password;
             ResponseEntity<UserModel> responseEntity = restTemplate.exchange(
-                    "http://localhost:8081/api/account/login",
+                    "http://localhost:8081/api/" + resource,
                     HttpMethod.POST,
                     httpEntity,
                     UserModel.class);
