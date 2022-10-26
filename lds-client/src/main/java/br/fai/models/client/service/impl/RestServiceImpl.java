@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.List;
 
 @Service
@@ -23,8 +25,23 @@ public class RestServiceImpl<T> implements RestService<T> {
 
     @Override
     public HttpHeaders getAuthenticationHeaders(String username, String password) {
+        String auth = "Username=" + username + ";Password=" + password;
 
-        return null;
+        byte[] encodedBytes;
+
+        try {
+            encodedBytes = Base64.getEncoder().encode(auth.getBytes(StandardCharsets.UTF_8));
+
+            String headers = "Basic " + new String(encodedBytes);
+
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.set("Authorization", headers);
+
+            return httpHeaders;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
