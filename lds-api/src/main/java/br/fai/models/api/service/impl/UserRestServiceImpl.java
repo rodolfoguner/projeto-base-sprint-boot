@@ -1,6 +1,7 @@
 package br.fai.models.api.service.impl;
 
 import br.fai.lds.db.dao.UserDao;
+import br.fai.models.api.enums.Credentials;
 import br.fai.models.api.service.UserRestService;
 import br.fai.models.entities.UserModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,7 +80,7 @@ public class UserRestServiceImpl implements UserRestService<UserModel> {
         return null;
     }
 
-    private Map<String, String> decodeAndGetUsernameAndPassword(String encodedData) {
+    private Map<Credentials, String> decodeAndGetUsernameAndPassword(String encodedData) {
         String[] splitData = encodedData.split("Basic ");
 
         if (splitData.length != 2) {
@@ -103,10 +104,10 @@ public class UserRestServiceImpl implements UserRestService<UserModel> {
             return null;
         }
 
-        Map<String, String> credentialsMap = new HashMap<>();
+        Map<Credentials, String> credentialsMap = new HashMap<>();
 
-        credentialsMap.put("USERNAME", credentials[0]);
-        credentialsMap.put("PASSWORD", credentials[1]);
+        credentialsMap.put(Credentials.USERNAME, credentials[0]);
+        credentialsMap.put(Credentials.PASSWORD, credentials[1]);
 
         return credentialsMap;
     }
