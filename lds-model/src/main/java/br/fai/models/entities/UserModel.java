@@ -12,6 +12,16 @@ public class UserModel extends BaseEntity {
     private Boolean isActive;
     private byte[] avatar;
 
+    private String token;
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
     public int getId() {
         return id;
     }
