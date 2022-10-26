@@ -54,16 +54,28 @@ public class UserRestServiceImpl implements UserRestService<UserModel> {
     }
 
     @Override
-    public UserModel validateLogin(String username, String password) {
+    public UserModel validateLogin(String encodedData) {
 
-        if (username.isEmpty() || password.isEmpty()) {
+        if (encodedData.isEmpty()) {
             return null;
         }
 
-        if (username.length() < 4 || password.length() < 3) {
-            return null;
-        }
+        decodeAndGetUsernameAndPassword(encodedData);
 
-        return userDao.validateUsernameAndPassword(username, password);
+//        if (username.isEmpty() || password.isEmpty()) {
+//            return null;
+//        }
+//
+//        if (username.length() < 4 || password.length() < 3) {
+//            return null;
+//        }
+//
+//        return userDao.validateUsernameAndPassword(username, password);
+
+        return null;
+    }
+
+    private void decodeAndGetUsernameAndPassword(String encodedData) {
+
     }
 }

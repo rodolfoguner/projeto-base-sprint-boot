@@ -12,13 +12,12 @@ import org.springframework.web.bind.annotation.*;
 public class AccountRestController {
 
     @Autowired
-    UserRestService userRestService;
+    UserRestService<UserModel> userRestService;
 
     @PostMapping("/login")
-    public ResponseEntity<UserModel> login(@RequestParam("username") final String username,
-                                           @RequestParam("password") final String password) {
+    public ResponseEntity<UserModel> login(@RequestHeader("Authorization") final String encodedData) {
 
-        UserModel userModel = userRestService.validateLogin(username, password);
+        UserModel userModel = userRestService.validateLogin(encodedData);
 
         if (userModel == null) {
             return ResponseEntity.badRequest().build();
