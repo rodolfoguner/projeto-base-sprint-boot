@@ -6,7 +6,11 @@ import br.fai.models.entities.UserModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class UserRestServiceImpl implements UserRestService<UserModel> {
@@ -75,7 +79,35 @@ public class UserRestServiceImpl implements UserRestService<UserModel> {
         return null;
     }
 
-    private void decodeAndGetUsernameAndPassword(String encodedData) {
+    private Map<String, String> decodeAndGetUsernameAndPassword(String encodedData) {
+        String[] splitData = encodedData.split("Basic ");
 
+        if (splitData.length != 2) {
+            return null;
+        }
+
+        String base64Data = splitData[1];
+        byte[] decodedBytes = Base64.getDecoder().decode(base64Data);
+
+        String decodedString = new String(decodedBytes, StandardCharsets.UTF_8);
+
+        String[] firstPart = decodedString.split("Username=");
+
+        if (firstPart.length != 2) {
+            return null;
+        }
+
+        String[] credentials = firstPart[1].split(";Password=");
+
+        if (credentials.length != 2) {
+            return null;
+        }
+
+        Map<String, String> credentialsMap = new HashMap<>();
+
+        credentialsMap.put("USERNAME", credentials[0]);
+        credentialsMap.put("PASSWORD", credentials[1]);
+
+        return credentialsMap;
     }
 }
