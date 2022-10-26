@@ -65,19 +65,26 @@ public class UserRestServiceImpl implements UserRestService<UserModel> {
             return null;
         }
 
-        decodeAndGetUsernameAndPassword(encodedData);
+        Map<Credentials, String> credentialsMap = decodeAndGetUsernameAndPassword(encodedData);
 
-//        if (username.isEmpty() || password.isEmpty()) {
-//            return null;
-//        }
-//
-//        if (username.length() < 4 || password.length() < 3) {
-//            return null;
-//        }
-//
-//        return userDao.validateUsernameAndPassword(username, password);
+        if (credentialsMap == null || credentialsMap.size() != 2) {
+            return null;
+        }
 
-        return null;
+        String username = credentialsMap.get(Credentials.USERNAME);
+        String password = credentialsMap.get(Credentials.PASSWORD);
+
+        if (username.isEmpty() || password.isEmpty()) {
+            return null;
+        }
+
+        if (username.length() < 4 || password.length() < 3) {
+            return null;
+        }
+
+        UserModel user = userDao.validateUsernameAndPassword(username, password);
+
+        return user;
     }
 
     private Map<Credentials, String> decodeAndGetUsernameAndPassword(String encodedData) {
