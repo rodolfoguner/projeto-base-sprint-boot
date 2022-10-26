@@ -22,7 +22,8 @@ public class RestServiceImpl<T> implements RestService<T> {
     }
 
     @Override
-    public HttpHeaders getAuthenticatedHeaders(String username, String password) {
+    public HttpHeaders getAuthenticationHeaders(String username, String password) {
+
         return null;
     }
 

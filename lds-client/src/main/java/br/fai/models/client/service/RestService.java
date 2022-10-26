@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface RestService<T> {
 
-    HttpHeaders getAuthenticatedHeaders(String username, String password);
+    HttpHeaders getAuthenticationHeaders(String username, String password);
 
     HttpHeaders getRequestHeaders();
 
