@@ -24,7 +24,7 @@ public class JWTServiceImpl implements JWTService {
         grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_" + userModel.getType()));
 
         try {
-            String token = Jwts
+            return Jwts
                     .builder()
                     .setId("FAI_LDS_2022")
                     .setSubject(userModel.getUsername())
@@ -39,7 +39,6 @@ public class JWTServiceImpl implements JWTService {
                     .signWith(ApiSecurityConstants.KEY)
                     .compact();
 
-            return token;
         } catch (Exception e) {
             e.printStackTrace();
             return ApiSecurityConstants.INVALID_TOKEN;

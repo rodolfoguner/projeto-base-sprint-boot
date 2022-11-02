@@ -1,6 +1,7 @@
 package br.fai.models.client.service.impl;
 
 import br.fai.models.client.service.RestService;
+import br.fai.models.entities.UserModel;
 import com.google.gson.Gson;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
@@ -10,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import javax.servlet.http.HttpSession;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.List;
@@ -45,12 +47,25 @@ public class RestServiceImpl<T> implements RestService<T> {
     }
 
     @Override
-    public HttpHeaders getRequestHeaders() {
-        return null;
+    public HttpHeaders getRequestHeaders(HttpSession httpSession) {
+        try {
+            UserModel user = (UserModel) httpSession.getAttribute("currentUser");
+
+            String authHeader = "Bearer " + user.getToken();
+
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.set("Authorization", authHeader);
+
+            return httpHeaders;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new HttpHeaders();
+        }
     }
 
     @Override
-    public List<T> get(String resource) {
+    public List<T> get(String resource, HttpHeaders httpHeaders) {
 
         List<T> response = null;
 
@@ -58,7 +73,7 @@ public class RestServiceImpl<T> implements RestService<T> {
 
         try {
 
-            final HttpEntity<String> requestEntity = new HttpEntity<>("");
+            final HttpEntity<String> requestEntity = new HttpEntity<>(httpHeaders);
 
             ResponseEntity<List<T>> requestResponse = restTemplate.exchange(
                     buildEndPoint(resource),

@@ -9,10 +9,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService<UserModel> {
+
+    public UserServiceImpl(HttpSession httpSession) {
+        this.httpSession = httpSession;
+    }
+
+    private HttpSession httpSession;
 
     final String resource = "user/";
 
@@ -26,7 +33,10 @@ public class UserServiceImpl implements UserService<UserModel> {
 
     @Override
     public List<UserModel> find() {
-        return restService.get(resource);
+
+        HttpHeaders requestHeaders = restService.getRequestHeaders(httpSession);
+
+        return restService.get(resource, requestHeaders);
     }
 
     @Override

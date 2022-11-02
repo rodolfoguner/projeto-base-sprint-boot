@@ -2,15 +2,16 @@ package br.fai.models.client.service;
 
 import org.springframework.http.HttpHeaders;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 public interface RestService<T> {
 
     HttpHeaders getAuthenticationHeaders(String username, String password);
 
-    HttpHeaders getRequestHeaders();
+    HttpHeaders getRequestHeaders(HttpSession httpSession);
 
-    List<T> get(final String resource);
+    List<T> get(final String resource, HttpHeaders httpHeaders);
 
     T getById(final String resouce, Class<T> clazz);
 

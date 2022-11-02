@@ -2,6 +2,7 @@ package br.fai.models.api.service.impl;
 
 import br.fai.lds.db.dao.UserDao;
 import br.fai.models.api.enums.Credentials;
+import br.fai.models.api.service.JWTService;
 import br.fai.models.api.service.UserRestService;
 import br.fai.models.entities.UserModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,9 @@ public class UserRestServiceImpl implements UserRestService<UserModel> {
 
     @Autowired
     private UserDao<UserModel> userDao;
+
+    @Autowired
+    private JWTService jwtService;
 
     @Override
     public List<UserModel> find() {
@@ -83,6 +87,9 @@ public class UserRestServiceImpl implements UserRestService<UserModel> {
         }
 
         UserModel user = userDao.validateUsernameAndPassword(username, password);
+
+        user.setToken(jwtService.getJWTToken(user));
+        user.setPassword(null);
 
         return user;
     }
