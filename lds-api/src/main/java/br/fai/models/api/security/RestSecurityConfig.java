@@ -2,6 +2,7 @@ package br.fai.models.api.security;
 
 import br.fai.models.api.security.filter.JWTAuthorizationFilter;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -22,6 +23,8 @@ public class RestSecurityConfig extends WebSecurityConfigurerAdapter {
                         UsernamePasswordAuthenticationFilter.class
                 )
                 .authorizeRequests()
+                .antMatchers(HttpMethod.POST, "/api/account/**")
+                .permitAll()
                 .anyRequest()
                 .authenticated();
     }
