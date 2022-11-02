@@ -13,4 +13,5 @@ public class ApiSecurityConstants {
 
     public static final SecretKey KEY = Keys.hmacShaKeyFor("DSLKDJSAKDJKLASJDLKSJAKDjsakdjskdjklasjdklasjdklasjdklasjdklasjd".getBytes(StandardCharsets.UTF_8));
     public static final String AUTHORITIES = "authorities";
+    public static final String INVALID_TOKEN = "INVALID_TOKEN";
 }
