@@ -28,7 +28,10 @@ public class UserServiceImpl implements UserService<UserModel> {
 
     @Override
     public int create(UserModel entity) {
-        return restService.post(resource, entity);
+
+        HttpHeaders requestHeaders = restService.getRequestHeaders(httpSession);
+
+        return restService.post(resource, entity, requestHeaders);
     }
 
     @Override
@@ -41,17 +44,26 @@ public class UserServiceImpl implements UserService<UserModel> {
 
     @Override
     public UserModel findById(int id) {
-        return restService.getById(resource + "/" + id, UserModel.class);
+
+        HttpHeaders requestHeaders = restService.getRequestHeaders(httpSession);
+
+        return restService.getById(resource + "/" + id, UserModel.class, requestHeaders);
     }
 
     @Override
     public boolean update(int id, UserModel entity) {
-        return restService.put(resource + "/" + id, entity);
+
+        HttpHeaders requestHeaders = restService.getRequestHeaders(httpSession);
+
+        return restService.put(resource + "/" + id, entity, requestHeaders);
     }
 
     @Override
     public boolean deleteById(int id) {
-        return restService.deleteById(resource + "/" + id);
+
+        HttpHeaders requestHeaders = restService.getRequestHeaders(httpSession);
+
+        return restService.deleteById(resource + "/" + id, requestHeaders);
     }
 
     @Override

@@ -24,7 +24,7 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
         try {
-            if (!checkJWTToke(request)) {
+            if (!checkJWTToken(request)) {
                 SecurityContextHolder.clearContext();
                 return;
             }
@@ -45,7 +45,6 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
 
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Look likes we got a bug in the matrix");
-            return;
 
         } finally {
             filterChain.doFilter(request, response);
@@ -82,7 +81,7 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
                 .parseClaimsJws(jwtToken);
     }
 
-    private boolean checkJWTToke(HttpServletRequest request) {
+    private boolean checkJWTToken(HttpServletRequest request) {
         String authorizationHeader = request.getHeader(ApiSecurityConstants.HEADER);
 
         if (authorizationHeader == null || authorizationHeader.startsWith(ApiSecurityConstants.PREFIX)) {

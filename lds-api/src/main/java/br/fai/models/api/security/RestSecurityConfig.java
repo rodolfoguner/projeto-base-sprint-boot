@@ -23,7 +23,7 @@ public class RestSecurityConfig extends WebSecurityConfigurerAdapter {
                         UsernamePasswordAuthenticationFilter.class
                 )
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/api/account/**")
+                .antMatchers(HttpMethod.POST, "/api/account/login")
                 .permitAll()
                 .anyRequest()
                 .authenticated();

@@ -92,16 +92,22 @@ public class RestServiceImpl<T> implements RestService<T> {
     }
 
     @Override
-    public T getById(String resouce, Class<T> clazz) {
+    public T getById(String resouce, Class<T> clazz, HttpHeaders httpHeaders) {
 
         T response = null;
 
         final RestTemplate restTemplate = new RestTemplate();
 
 
-        ResponseEntity<String> resquestResponse = null;
+        ResponseEntity<String> resquestResponse;
         try {
-            final HttpEntity<String> requestEntity = new HttpEntity<>("");
+            HttpEntity<String> requestEntity;
+
+            if (httpHeaders != null) {
+                requestEntity = new HttpEntity<>(httpHeaders);
+            } else {
+                requestEntity = new HttpEntity<>("");
+            }
 
             resquestResponse = restTemplate.exchange(
                     buildEndPoint(resouce),
@@ -122,13 +128,13 @@ public class RestServiceImpl<T> implements RestService<T> {
     }
 
     @Override
-    public int post(String resource, T entity) {
+    public int post(String resource, T entity, HttpHeaders httpHeaders) {
 
         final RestTemplate restTemplate = new RestTemplate();
 
         try {
 
-            final HttpEntity<T> httpEntity = new HttpEntity<>(entity);
+            final HttpEntity<T> httpEntity = new HttpEntity<>(entity, httpHeaders);
 
             final ResponseEntity<String> responseEntity = restTemplate.exchange(
                     buildEndPoint(resource),
@@ -149,7 +155,7 @@ public class RestServiceImpl<T> implements RestService<T> {
     }
 
     @Override
-    public boolean put(String resource, T entity) {
+    public boolean put(String resource, T entity, HttpHeaders httpHeaders) {
 
         boolean response = false;
 
@@ -157,7 +163,7 @@ public class RestServiceImpl<T> implements RestService<T> {
 
 
         try {
-            final HttpEntity<T> httpEntity = new HttpEntity<>(entity);
+            final HttpEntity<T> httpEntity = new HttpEntity<>(entity, httpHeaders);
 
             final ResponseEntity<Boolean> responseEntity = restTemplate.exchange(
                     buildEndPoint(resource),
@@ -175,7 +181,7 @@ public class RestServiceImpl<T> implements RestService<T> {
     }
 
     @Override
-    public boolean deleteById(String resource) {
+    public boolean deleteById(String resource, HttpHeaders httpHeaders) {
 
         boolean response = false;
 
@@ -184,7 +190,7 @@ public class RestServiceImpl<T> implements RestService<T> {
 
         try {
 
-            final HttpEntity<String> httpEntity = new HttpEntity<>("");
+            final HttpEntity<String> httpEntity = new HttpEntity<>(httpHeaders);
 
             final ResponseEntity<Boolean> requestResponse = restTemplate.exchange(
                     buildEndPoint(resource),
