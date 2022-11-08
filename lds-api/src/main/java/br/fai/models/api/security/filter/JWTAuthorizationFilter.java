@@ -84,7 +84,7 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
     private boolean checkJWTToken(HttpServletRequest request) {
         String authorizationHeader = request.getHeader(ApiSecurityConstants.HEADER);
 
-        if (authorizationHeader == null || authorizationHeader.startsWith(ApiSecurityConstants.PREFIX)) {
+        if (authorizationHeader == null || !authorizationHeader.startsWith(ApiSecurityConstants.PREFIX)) {
             return false;
         }
 
