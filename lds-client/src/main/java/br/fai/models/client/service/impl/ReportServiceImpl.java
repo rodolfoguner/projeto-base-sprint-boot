@@ -3,16 +3,32 @@ package br.fai.models.client.service.impl;
 import br.fai.models.client.service.ReportService;
 import br.fai.models.client.service.UserService;
 import br.fai.models.entities.UserModel;
-import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.util.ResourceUtils;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+
+@Service
 public class ReportServiceImpl implements ReportService {
 
     @Autowired
     private UserService<UserModel> userService;
+
+    private enum TYPE {
+        PDF,
+        HTML,
+        XML,
+    }
 
     @Override
     public String generateAndGetPdfFilePath() {
@@ -29,13 +45,73 @@ public class ReportServiceImpl implements ReportService {
 
         List<UserModel> users = userService.find();
 
+        if (users == null || users.isEmpty()) {
+            return "";
+        }
+
+        File file;
+
+        try {
+            file = ResourceUtils
+                    .getFile("classpath:reports/users-report-fai.jrxml");
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return "";
+
+        }
+
         JasperReport jasperReport;
 
-        return null;
+        try {
+            jasperReport = JasperCompileManager
+                    .compileReport(file.getAbsolutePath());
+
+        } catch (JRException e) {
+            e.printStackTrace();
+            return "";
+
+        }
+
+        JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(users);
+
+        Map<String, Object> parameters = new HashMap<>();
+
+        parameters.put("MODIFIED_TITLE", "FAI-2022");
+
+        JasperPrint jasperPrint;
+
+        try {
+            jasperPrint = JasperFillManager
+                    .fillReport(jasperReport, parameters, dataSource);
+
+        } catch (JRException e) {
+            e.printStackTrace();
+            return "";
+
+        }
+
+        String filePath = generateFilePath(basePath);
+
+        try {
+            JasperExportManager.exportReportToPdfFile(jasperPrint, filePath);
+            return filePath;
+
+        } catch (JRException e) {
+            e.printStackTrace();
+            return "";
+
+        }
     }
 
-    @Override
-    public String generateFilePath() {
-        return null;
+    private String generateFilePath(String basePath) {
+
+        SimpleDateFormat formatter = new SimpleDateFormat("dd_MM_yyyy-HH_mm_ss");
+
+        Date date = new Date(System.currentTimeMillis());
+
+        String fileName = formatter.format(date) + "report." + TYPE.PDF;
+
+        return basePath + fileName;
     }
 }

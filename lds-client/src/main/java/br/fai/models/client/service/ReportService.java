@@ -4,6 +4,4 @@ public interface ReportService {
 
     String generateAndGetPdfFilePath();
 
-    String generateFilePath();
-
 }
