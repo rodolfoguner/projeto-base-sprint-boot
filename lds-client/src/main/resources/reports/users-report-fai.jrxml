@@ -27,7 +27,7 @@
             <image>
                 <reportElement x="275" y="0" width="300" height="64" uuid="d7cb9de5-f1d6-4e9a-8441-72f5e2127742"/>
                 <imageExpression>
-                    <![CDATA["/fai-reports/leaf_banner_green.png"]]></imageExpression>
+                    <![CDATA["c:/Users/rodolfo/Documents/fai-reports/leaf_banner_green.png"]]></imageExpression>
             </image>
 
 
