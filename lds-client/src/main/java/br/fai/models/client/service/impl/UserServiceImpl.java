@@ -3,7 +3,6 @@ package br.fai.models.client.service.impl;
 import br.fai.models.client.service.RestService;
 import br.fai.models.client.service.UserService;
 import br.fai.models.entities.UserModel;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
@@ -15,15 +14,15 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService<UserModel> {
 
-    public UserServiceImpl(HttpSession httpSession) {
+    public UserServiceImpl(HttpSession httpSession, RestService<UserModel> restService) {
         this.httpSession = httpSession;
+        this.restService = restService;
     }
 
     private HttpSession httpSession;
 
     final String resource = "user/";
 
-    @Autowired
     private RestService<UserModel> restService;
 
     @Override
@@ -45,17 +44,33 @@ public class UserServiceImpl implements UserService<UserModel> {
     @Override
     public UserModel findById(int id) {
 
+        if (id <= 0) {
+            return null;
+        }
+
         HttpHeaders requestHeaders = restService.getRequestHeaders(httpSession);
 
-        return restService.getById(resource + "/" + id, UserModel.class, requestHeaders);
+        return restService.getById(resource + id, UserModel.class, requestHeaders);
     }
 
     @Override
     public boolean update(int id, UserModel entity) {
 
+        if (id <= 0) {
+            return false;
+        }
+
+        if (entity == null) {
+            return false;
+        }
+
+        if (id != entity.getId()) {
+            return false;
+        }
+
         HttpHeaders requestHeaders = restService.getRequestHeaders(httpSession);
 
-        return restService.put(resource + "/" + id, entity, requestHeaders);
+        return restService.put(resource + id, entity, requestHeaders);
     }
 
     @Override
