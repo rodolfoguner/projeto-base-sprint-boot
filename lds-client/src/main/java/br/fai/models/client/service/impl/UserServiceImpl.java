@@ -5,7 +5,6 @@ import br.fai.models.client.service.UserService;
 import br.fai.models.entities.UserModel;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpSession;
@@ -14,9 +13,10 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService<UserModel> {
 
-    public UserServiceImpl(HttpSession httpSession, RestService<UserModel> restService) {
+    public UserServiceImpl(HttpSession httpSession, RestService<UserModel> restService, RestTemplate restTemplate) {
         this.httpSession = httpSession;
         this.restService = restService;
+        this.restTemplate = restTemplate;
     }
 
     private HttpSession httpSession;
@@ -24,6 +24,8 @@ public class UserServiceImpl implements UserService<UserModel> {
     final String resource = "user/";
 
     private RestService<UserModel> restService;
+
+    private RestTemplate restTemplate;
 
     @Override
     public int create(UserModel entity) {
@@ -83,30 +85,25 @@ public class UserServiceImpl implements UserService<UserModel> {
 
     @Override
     public UserModel validateUsernameAndPassword(String username, String password) {
-        try {
-            RestTemplate restTemplate = new RestTemplate();
 
-            HttpHeaders httpHeaders = restService.getAuthenticationHeaders(username, password);
+        HttpHeaders httpHeaders = restService.getAuthenticationHeaders(username, password);
 
-            HttpEntity<String> httpEntity = new HttpEntity<>(httpHeaders);
+        HttpEntity<String> httpEntity = new HttpEntity<>(httpHeaders);
 
-            String resource = "account/login";
-            ResponseEntity<UserModel> responseEntity = restTemplate.exchange(
-                    "http://localhost:8081/api/" + resource,
-                    HttpMethod.POST,
-                    httpEntity,
-                    UserModel.class);
+        String resource = "account/login";
+        ResponseEntity<UserModel> responseEntity = restTemplate.exchange(
+                "http://localhost:8081/api/" + resource,
+                HttpMethod.POST,
+                httpEntity,
+                UserModel.class);
 
-            if (responseEntity.getStatusCode() != HttpStatus.OK) {
-                return null;
-            }
-
-            UserModel user = responseEntity.getBody();
-
-            return user;
-        } catch (RestClientException e) {
-            e.printStackTrace();
+        if (responseEntity.getStatusCode() != HttpStatus.OK) {
             return null;
         }
+
+        UserModel user = responseEntity.getBody();
+
+        return user;
+
     }
 }
